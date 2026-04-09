@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>PyType Lite - Python 打字闯关</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <main class="phone-frame">
+      <section id="homeView" class="view active" aria-label="首页">
+        <header class="home-header card">
+          <div class="brand-row">
+            <div class="logo-mark">Py</div>
+            <div>
+              <h1>PyType</h1>
+              <p class="sub-text">边练打字，边熟悉 Python 词汇与代码符号</p>
+            </div>
+          </div>
+          <button id="openStatsBtn" class="ghost-btn">统计</button>
+        </header>
+
+        <section class="hero card">
+          <h2>PyType 打字闯关</h2>
+          <p>打开就能玩，专为 Python 初学者设计的输入训练游戏。</p>
+          <button id="startGameBtn" class="primary-btn">开始闯关</button>
+        </section>
+
+        <section class="mode-list">
+          <button class="mode-card selected" data-mode="rain">
+            <span class="mode-icon">☔</span>
+            <span class="mode-title">代码雨模式</span>
+            <span class="mode-desc">打掉下落词条，守住生命值</span>
+          </button>
+          <button class="mode-card" data-mode="sprint">
+            <span class="mode-icon">⚡</span>
+            <span class="mode-title">单词冲刺</span>
+            <span class="mode-desc">逐题计时，拼速度与准确率</span>
+          </button>
+          <button class="mode-card" data-mode="symbol">
+            <span class="mode-icon">{ }</span>
+            <span class="mode-title">符号训练</span>
+            <span class="mode-desc">专攻括号、比较符和短片段</span>
+          </button>
+        </section>
+
+        <section class="summary card">
+          <div class="summary-row">
+            <span>历史最高分</span>
+            <strong id="bestScoreValue">0</strong>
+          </div>
+          <div class="summary-row">
+            <span>累计练习局数</span>
+            <strong id="totalGamesValue">0</strong>
+          </div>
+          <div class="summary-row">
+            <span>已解锁关卡</span>
+            <strong id="unlockedValue">基础</strong>
+          </div>
+        </section>
+      </section>
+
+      <section id="gameView" class="view game-view" aria-label="游戏中">
+        <header class="game-top">
+          <button id="backHomeBtn" class="icon-btn" title="返回首页">←</button>
+          <div class="mode-name" id="modeLabel">代码雨模式</div>
+          <button id="pauseBtn" class="icon-btn" title="暂停">⏸</button>
+        </header>
+
+        <div class="status-grid">
+          <div class="status-item">
+            <span>分数</span>
+            <strong id="scoreValue">0</strong>
+          </div>
+          <div class="status-item">
+            <span>生命</span>
+            <strong id="lifeValue">5</strong>
+          </div>
+          <div class="status-item">
+            <span>连击</span>
+            <strong id="comboValue">0</strong>
+          </div>
+          <div class="status-item">
+            <span>关卡/进度</span>
+            <strong id="progressValue">1-1</strong>
+          </div>
+        </div>
+
+        <section id="arena" class="arena" aria-live="polite">
+          <div id="rainLayer" class="rain-layer"></div>
+          <div id="singleTargetBox" class="single-target hidden">
+            <div class="label">当前目标</div>
+            <div id="singleTargetText" class="single-target-text">print</div>
+          </div>
+        </section>
+
+        <div id="feedbackBar" class="feedback-bar">准备开始</div>
+
+        <form id="inputForm" class="input-row" autocomplete="off">
+          <input
+            id="wordInput"
+            type="text"
+            spellcheck="false"
+            autocapitalize="off"
+            autocomplete="off"
+            placeholder="输入目标并回车"
+          >
+          <button class="primary-btn" type="submit">确认</button>
+        </form>
+      </section>
+
+      <section id="resultView" class="view" aria-label="结算页">
+        <header class="result-head card">
+          <h2>本局结算</h2>
+          <p id="resultModeLabel">代码雨模式</p>
+        </header>
+        <section class="result-card card">
+          <div class="result-row"><span>得分</span><strong id="resultScore">0</strong></div>
+          <div class="result-row"><span>正确击中</span><strong id="resultCorrect">0</strong></div>
+          <div class="result-row"><span>错误/漏掉</span><strong id="resultWrong">0</strong></div>
+          <div class="result-row"><span>正确率</span><strong id="resultAccuracy">0%</strong></div>
+          <div class="result-row"><span>最长连击</span><strong id="resultCombo">0</strong></div>
+          <div class="result-row"><span>历史最高</span><strong id="resultBest">0</strong></div>
+        </section>
+        <div class="result-actions">
+          <button id="retryBtn" class="primary-btn">再来一局</button>
+          <button id="goHomeBtn" class="ghost-btn">返回首页</button>
+        </div>
+      </section>
+
+      <section id="statsView" class="view" aria-label="统计页">
+        <header class="card">
+          <h2>训练统计</h2>
+          <p>所有数据仅保存在你的浏览器本地。</p>
+        </header>
+        <section class="stats-grid">
+          <article class="card stat-box">
+            <span>总局数</span>
+            <strong id="statsGames">0</strong>
+          </article>
+          <article class="card stat-box">
+            <span>总正确</span>
+            <strong id="statsCorrect">0</strong>
+          </article>
+          <article class="card stat-box">
+            <span>总错误</span>
+            <strong id="statsWrong">0</strong>
+          </article>
+          <article class="card stat-box">
+            <span>全局最高连击</span>
+            <strong id="statsCombo">0</strong>
+          </article>
+        </section>
+        <section class="card mode-best">
+          <h3>模式最佳成绩</h3>
+          <div class="summary-row">
+            <span>代码雨</span>
+            <strong id="bestRain">0</strong>
+          </div>
+          <div class="summary-row">
+            <span>单词冲刺</span>
+            <strong id="bestSprint">0</strong>
+          </div>
+          <div class="summary-row">
+            <span>符号训练</span>
+            <strong id="bestSymbol">0</strong>
+          </div>
+        </section>
+        <section class="card">
+          <h3>最常错内容（Top 5）</h3>
+          <ol id="wrongList" class="wrong-list"></ol>
+        </section>
+        <button id="closeStatsBtn" class="ghost-btn full-width">返回首页</button>
+      </section>
+    </main>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
