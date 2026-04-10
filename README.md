@@ -1,45 +1,54 @@
-# PyType Lite - Python 打字闯关游戏
+<div align="center">
 
-`PyType Lite` 是一个面向 Python 初学者的打字训练游戏。  
-核心目标是通过高频输入 Python 单词、关键字和符号，提升输入速度与代码熟悉度。
+# PyType Lite
+### Python 打字闯关游戏
 
-## 游戏模式
+![Platform](https://img.shields.io/badge/Platform-Web-0ea5e9?style=flat-square)
+![Tech](https://img.shields.io/badge/Tech-Vanilla%20JavaScript-f59e0b?style=flat-square)
+![Stars](https://img.shields.io/github/stars/dawdaw1111/python-typing-game?style=flat-square)
+![Last Commit](https://img.shields.io/github/last-commit/dawdaw1111/python-typing-game?style=flat-square)
 
-1. `代码雨模式`：词条下落，命中可得分，漏掉会掉生命
-2. `单词冲刺模式`：逐题计时，考验速度与准确率
-3. `符号训练模式`：专项练习括号、比较符、常见短片段
+</div>
 
-## 核心机制
+为 Python 初学者设计的打字训练游戏，通过反复输入关键词、符号和常见片段提升输入速度与准确率。
+
+![PyType Preview](./docs/preview.png)
+
+## 三种模式
+
+1. `代码雨模式`：词条下落，命中得分，漏掉扣生命
+2. `单词冲刺`：限时逐题，强调速度与准确率
+3. `符号训练`：专项练习括号、比较符、代码片段
+
+## 项目亮点
 
 - 分数、生命、连击系统
-- 分数解锁内容（基础/关键字/符号）
+- 分数解锁（基础/关键字/符号池）
 - 本局结算（得分、正确率、最高连击）
-- 历史统计（总局数、模式最佳、易错 Top5）
-- 自动本地存档（`localStorage`）
+- 全局统计（总局数、模式最佳、易错 Top5）
+- 自动保存（`localStorage`）
 
 ## 快速开始
 
-1. 进入项目目录
-2. 直接用浏览器打开 `index.html`
+1. 克隆仓库或下载源码
+2. 打开 `index.html`
 
-或启动本地静态服务：
+或使用本地静态服务：
 
 ```bash
 python -m http.server 8000
 ```
 
-访问：`http://127.0.0.1:8000`
+浏览器访问 `http://127.0.0.1:8000`
 
-## 项目结构
+## 目录结构
 
-- `index.html`：页面结构
-- `style.css`：界面样式
-- `data.js`：词池、模式参数、解锁规则
-- `app.js`：游戏循环、判定与存档逻辑
-
-## 技术栈
-
-- HTML5
-- CSS3
-- Vanilla JavaScript（无框架）
+```text
+.
+├─ index.html       # 页面结构
+├─ style.css        # 样式
+├─ data.js          # 词池、模式参数、解锁规则
+├─ app.js           # 游戏循环、判定、存档逻辑
+└─ docs/preview.png # README 预览图
+```
 
